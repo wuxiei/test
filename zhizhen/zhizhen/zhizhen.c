@@ -386,70 +386,190 @@
 
 
 //计算器
-void menu()
+//void menu()
+//{
+//	printf("**************************************\n");
+//	printf("*******  1.add        2.sub    *******\n");
+//	printf("*******  3.mul        4.div    *******\n");
+//	printf("*******         0.exit         *******\n");
+//	printf("**************************************\n");
+//}
+//int Add(int x, int y)
+//{
+//	return x + y;
+//}
+//int Sub(int x, int y)
+//{
+//	return x - y;
+//}
+//int Mul(int x, int y)
+//{
+//	return x * y;
+//}
+//int Div(int x, int y)
+//{
+//	return x / y;
+//}
+//int x = 0;
+//int y = 0;
+//int input = 0;
+//void Calc(int (*pf)(int, int))//回调函数写法
+//{
+//	printf("请输入两个操作数：> ");
+//	scanf("%d%d", &x, &y);
+//	printf("%d\n", pf(x, y));
+//}
+//int main()
+//{
+//	
+//	int(*pfArr[5])(int, int) = { 0,Add,Sub,Mul,Div };//函数指针数组的写法
+//	do
+//	{
+//		menu();
+//		printf("请选择：> ");
+//		scanf("%d", &input);
+//
+//		switch (input)
+//		{
+//		case 1:
+//			Calc(Add);
+//			break;
+//		case 2:
+//			Calc(Sub);
+//			break;
+//		case 3:
+//			Calc(Mul);
+//			break;
+//		case 4:
+//			Calc(Div);
+//			break;
+//		case 0:
+//			printf("退出\n");
+//			break;
+//		default:
+//			printf("输入错误\n");
+//			break;
+//		}
+//
+//
+//		////函数指针数组的写法 - input是数组元素下标   - 一般pfArr这种函数指针数组被称为-转移表
+//		//if (input >= 1 && input <= 4)
+//		//{
+//		//	printf("请输入两个操作数:> ");
+//		//	scanf("%d%d", &x, &y);
+//		//	int ret = pfArr[input](x, y);
+//		//	printf("%d\n", ret);
+//		//}
+//		//else if(input==0)
+//		//{
+//		//	printf("退出\n");
+//		//}
+//		//else
+//		//{
+//		//	printf("选择错误\n");
+//		//}
+//		
+//		
+//		//switch循环写法
+//		/*switch (input)
+//		{
+//		case 1:
+//			printf("请输入两个操作数：> ");
+//			scanf("%d%d", &x, &y);
+//			printf("%d\n",Add(x, y));
+//			break;
+//		case 2:
+//			printf("请输入两个操作数：> ");
+//			scanf("%d%d", &x, &y);
+//			printf("%d\n", Sub(x, y));
+//			break;
+//		case 3:
+//			printf("请输入两个操作数：> ");
+//			scanf("%d%d", &x, &y);
+//			printf("%d\n", Mul(x, y));
+//			break;
+//		case 4:
+//			printf("请输入两个操作数：> ");
+//			scanf("%d%d", &x, &y);
+//			printf("%d\n", Div(x, y));
+//			break;
+//		case 0:
+//			printf("退出\n");
+//			break;
+//		default:
+//			printf("输入错误\n");
+//			break;
+//		}*/
+//	} while (input);
+//	return 0;
+//}
+
+
+//指向函数指针数组的指针
+//int main()
+//{
+//	int arr[10] = { 0 };
+//	int(*p)[10] = &arr;//取出数组的地址
+//	int(*pf)(int, int);//函数指针
+//	int (*pfArr[4])(int, int);//pfArr是一个数组 - 函数指针数组
+//	int(*(*ppfArr)[4])(int, int) = &pfArr;//指向函数指针数组的指针
+//	//ppfArr是个数组指针 - 指针指向的数组有四个元素 每个元素的类型是函数指针 int(* )(int,int)
+//}
+
+//void print(char* str)
+//{
+//	printf("hehe:%s", str);
+//}
+//void test(void(*p)(char*))
+//{
+//	printf("test\n");
+//	p("bit");
+//}
+//int main() 
+//{
+//	test(print);
+//	return 0;
+//}
+
+
+//冒泡排序
+
+//库函数qsort -quick sort 可以对任意类型的元素排序
+//void qsort(void* base, size_t num, size_t width, int(*cmp)(const void* e1, const void* e2));qsort的定义
+//void*base - 排序数组的地址  size_t num - 元素个数  size_t width - 每个元素的大小单位字节   int(*cmp)(const void* e1, const void* e2)) - 比较......
+int cmp_int(const void* e1, const void* e2)
 {
-	printf("**************************************\n");
-	printf("*******  1.add        2.sub    *******\n");
-	printf("*******  3.mul        4.div    *******\n");
-	printf("*******         0.exit         *******\n");
-	printf("**************************************\n");
+	//比较两个整型值
 }
-int Add(int x, int y)
+////////////////////////////////qsort(arr, sz, sizeof(arr[0]), cmp_int);////////////////////////////////////////////////
+void bubble_sort(int arr[], int sz)
 {
-	return x + y;
-}
-int Sub(int x, int y)
-{
-	return x - y;
-}
-int Mul(int x, int y)
-{
-	return x * y;
-}
-int Div(int x, int y)
-{
-	return x / y;
+	int i = 0;
+	//趟数
+	for (i = 0; i < sz - 1; i++)
+	{
+		//一趟冒泡排序
+		int j = 0;
+		for (j = 0; j <sz-1-i ; j++)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+				int tmp = arr[j];
+				arr[j]=arr[j + 1];
+				arr[j + 1] = tmp;
+			}
+		}
+	}
 }
 int main()
 {
-	int x = 0;
-	int y = 0;
-	int input = 0;
-	do
+	int arr[10] = { 9,8,7,6,5,4,3,2,1,0 };
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	bubble_sort(arr, sz);
+	int i = 0;
+	for (i = 0; i < sz; i++)
 	{
-		menu();
-		printf("请选择：> ");
-		scanf("%d", &input);
-		
-		switch (input)
-		{
-		case 1:
-			printf("请输入两个操作数：> ");
-			scanf("%d%d", &x, &y);
-			printf("%d\n",Add(x, y));
-			break;
-		case 2:
-			printf("请输入两个操作数：> ");
-			scanf("%d%d", &x, &y);
-			printf("%d\n", Sub(x, y));
-			break;
-		case 3:
-			printf("请输入两个操作数：> ");
-			scanf("%d%d", &x, &y);
-			printf("%d\n", Mul(x, y));
-			break;
-		case 4:
-			printf("请输入两个操作数：> ");
-			scanf("%d%d", &x, &y);
-			printf("%d\n", Div(x, y));
-			break;
-		case 0:
-			printf("退出\n");
-			break;
-		default:
-			printf("输入错误\n");
-			break;
-		}
-	} while (input);
+		printf("%d ", arr[i]);
+	}
 	return 0;
 }
