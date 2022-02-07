@@ -1,6 +1,8 @@
 #include<stdio.h>
 #define _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable : 4996)
+#include<stdlib.h>
+#include<string.h>
 //int main()
 //{
 //	char arr[] = "abcdef";
@@ -534,42 +536,162 @@
 
 //冒泡排序
 
-//库函数qsort -quick sort 可以对任意类型的元素排序
-//void qsort(void* base, size_t num, size_t width, int(*cmp)(const void* e1, const void* e2));qsort的定义
-//void*base - 排序数组的地址  size_t num - 元素个数  size_t width - 每个元素的大小单位字节   int(*cmp)(const void* e1, const void* e2)) - 比较......
-int cmp_int(const void* e1, const void* e2)
+
+//int cmp_int(const void* e1, const void* e2)
+//{
+//	//比较两个整型值
+//	return *(int*)e1 - *(int*)e2;//将e1 e2强制类型转化成int* 型
+//	//定义规定d1>e2返回大于0的数 e1=e2返回0 e1<e2返回<0的数
+//
+//}
+//
+////void bubble_sort(int arr[], int sz)
+////{
+////	int i = 0;
+////	//趟数
+////	for (i = 0; i < sz - 1; i++)
+////	{
+////		//一趟冒泡排序
+////		int j = 0;
+////		for (j = 0; j <sz-1-i ; j++)
+////		{
+////			if (arr[j] > arr[j + 1])
+////			{
+////				int tmp = arr[j];
+////				arr[j]=arr[j + 1];
+////				arr[j + 1] = tmp;
+////			}
+////		}
+////	}
+////}
+//int main()
+//{
+//	int arr[10] = { 9,8,7,6,5,4,3,2,1,0 };
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	qsort(arr, sz, sizeof(arr[0]), cmp_int);
+////库函数qsort -quick sort 可以对任意类型的元素排序
+////void qsort(void* base, size_t num, size_t width, int(*cmp)(const void* e1, const void* e2));qsort的定义
+////void*base -待排序数组的首元素地址  
+// size_t num - 待排序数组元素个数  
+// size_t width - 待排序数组每个元素的大小-单位字节  
+// int(*cmp)(const void* e1, const void* e2)) - 自定义的用来比较两个元素的函数指针 函数指针的两个参数是待比较的两个元素的地址
+////void*可以接受任意类型的指针 但是由于所接受类型不定所以 不能解引用 不能进行+ -操作
+// 
+//	//bubble_sort(arr, sz);
+//	int i = 0;
+//	for (i = 0; i < sz; i++)
+//	{
+//		printf("%d ", arr[i]);
+//	}
+//	return 0;
+//}
+
+
+//int cmp_float(const* e1, const* e2)
+//{
+//	return (int)( * (float*)e1 - *(float*)e2);
+//}
+//void test()
+//{
+//	float f[] = { 9.0,8.0,7.0,6.0 };
+//	int sz = sizeof(f) / sizeof(f[0]);
+//	qsort(f, sz, sizeof(f[0]), cmp_float);
+//	int j = 0;
+//	for (j = 0; j < sz; j++)
+//	{
+//		printf("%f ", f[j]);
+//	}
+//}
+
+
+struct stu
 {
-	//比较两个整型值
-}
-////////////////////////////////qsort(arr, sz, sizeof(arr[0]), cmp_int);////////////////////////////////////////////////
-void bubble_sort(int arr[], int sz)
+	char name[20];
+	int age;
+};
+
+//int cmp_stu_by_age(const void* e1, const void* e2)
+//{
+//	return ((struct stu*)e1)->age - ((struct stu*)e2)->age;
+//}
+//void test2()
+//{
+//	
+//	struct stu s[3] = { {"zhangsan",20},{"lesi",30},{"wangwu",10} };
+//	int sz = sizeof(s) / sizeof(s[0]);
+//	qsort(s, sz, sizeof(s[0]), cmp_stu_by_age);
+//}
+
+//int cmp_stu_by_name(const void* e1, const void* e2)
+//{
+//	//name是字符串不能直接比大小 要用strcmp e1>e2 return >0的数 e1<e2 return <0的数 e1=e2 return 0
+//	return strcmp(((struct stu*)e1)->name, ((struct stu*)e2)->name);
+//}
+//void test3()
+//{
+//	struct stu s[3] = { {"zhangsan",20},{"lesi",30},{"wangwu",10} };
+//	int sz = sizeof(s) / sizeof(s[0]);
+//	qsort(s, sz, sizeof(s[0]), cmp_stu_by_name);
+//}
+
+
+//万能冒泡排序 - 自主设计qsort
+
+void swap(char* buf1, char* buf2, int width)
 {
 	int i = 0;
-	//趟数
+	for (i = 0; i < width; i++)
+	{
+		char tmp = *buf1;
+		*buf1 = *buf2;
+		*buf2 = tmp;
+		buf1++;
+		buf2++;
+	}
+}
+void bubble_sort(void* base, int sz, int width,int(*cmp(void*e1,void*e2)))
+{
+	int i = 0;
 	for (i = 0; i < sz - 1; i++)
 	{
-		//一趟冒泡排序
 		int j = 0;
-		for (j = 0; j <sz-1-i ; j++)
+		for (j = 0; j < sz - 1 - i; j++)
 		{
-			if (arr[j] > arr[j + 1])
+			//两个元素的比较
+			if (cmp((char*)base+j*width,(char*)base+(j+1)*width) > 0)
 			{
-				int tmp = arr[j];
-				arr[j]=arr[j + 1];
-				arr[j + 1] = tmp;
+				//交换
+				swap((char*)base + j * width, (char*)base + (j + 1) * width,width);
 			}
 		}
 	}
 }
+
+
+int cmp_int(const void* e1, const void* e2)
+{
+	//比较两个整型值
+	return *(int*)e1 - *(int*)e2;
+
+}
+void test4()
+{
+	 int arr[10] = { 9,8,7,6,5,4,3,2,1,0 };
+	 int sz = sizeof(arr) / sizeof(arr[0]);
+	 bubble_sort(arr, sz, sizeof(arr[0]), cmp_int);
+}
+void test5() 
+{
+	struct stu s[3] = { {"zhangsan",20},{"lesi",30},{"wangwu",10} };
+	int sz = sizeof(s) / sizeof(s[0]);
+	//bubble_sort(s, sz, sizeof(s[0]), );
+}
 int main()
 {
-	int arr[10] = { 9,8,7,6,5,4,3,2,1,0 };
-	int sz = sizeof(arr) / sizeof(arr[0]);
-	bubble_sort(arr, sz);
-	int i = 0;
-	for (i = 0; i < sz; i++)
-	{
-		printf("%d ", arr[i]);
-	}
+	//test();
+	//test2();
+	//test3();
+	test4();
+	test5();
 	return 0;
 }
