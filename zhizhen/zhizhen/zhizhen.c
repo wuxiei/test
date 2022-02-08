@@ -604,11 +604,11 @@
 //}
 
 
-struct stu
-{
-	char name[20];
-	int age;
-};
+//struct stu
+//{
+//	char name[20];
+//	int age;
+//};
 
 //int cmp_stu_by_age(const void* e1, const void* e2)
 //{
@@ -635,63 +635,132 @@ struct stu
 //}
 
 
-//万能冒泡排序 - 自主设计qsort
+//万能冒泡排序 - 回调函数实现
+//void swap(char* buf1, char* buf2, int width)
+//{
+//	int i = 0;
+//	for (i = 0; i < width; i++)
+//	{
+//		char tmp = *buf1;
+//		*buf1 = *buf2;
+//		*buf2 = tmp;
+//		buf1++;
+//		buf2++;
+//	}
+//}
+//void bubble_sort(void* base, int sz, int width,int(*cmp(void*e1,void*e2)))
+//{
+//	int i = 0;
+//	for (i = 0; i < sz - 1; i++)
+//	{
+//		int j = 0;
+//		for (j = 0; j < sz - 1 - i; j++)
+//		{
+//			//两个元素的比较
+//			if (cmp((char*)base+j*width,(char*)base+(j+1)*width) > 0)
+//			{
+//				//交换
+//				swap((char*)base + j * width, (char*)base + (j + 1) * width,width);
+//			}
+//		}
+//	}
+//}
+//
+//
+//int cmp_int(const void* e1, const void* e2)
+//{
+//	//比较两个整型值
+//	return *(int*)e1 - *(int*)e2;
+//
+//}
+//int cmp_stu_by_name(const void* e1, const void* e2)
+//{
+//	//name是字符串不能直接比大小 要用strcmp e1>e2 return >0的数 e1<e2 return <0的数 e1=e2 return 0
+//	return strcmp(((struct stu*)e1)->name, ((struct stu*)e2)->name);
+//}
+//void test4()
+//{
+//	 int arr[10] = { 9,8,7,6,5,4,3,2,1,0 };
+//	 int sz = sizeof(arr) / sizeof(arr[0]);
+//	 bubble_sort(arr, sz, sizeof(arr[0]), cmp_int);
+//}
+//void test5() 
+//{
+//	struct stu s[3] = { {"zhangsan",20},{"lesi",30},{"wangwu",10} };
+//	int sz = sizeof(s) / sizeof(s[0]);
+//	bubble_sort(s, sz, sizeof(s[0]), cmp_stu_by_name);
+//}
+//int main()
+//{
+//	//test();
+//	//test2();
+//	//test3();
+//	//test4();
+//	test5();
+//	return 0;
+//}
 
-void swap(char* buf1, char* buf2, int width)
-{
-	int i = 0;
-	for (i = 0; i < width; i++)
-	{
-		char tmp = *buf1;
-		*buf1 = *buf2;
-		*buf2 = tmp;
-		buf1++;
-		buf2++;
-	}
-}
-void bubble_sort(void* base, int sz, int width,int(*cmp(void*e1,void*e2)))
-{
-	int i = 0;
-	for (i = 0; i < sz - 1; i++)
-	{
-		int j = 0;
-		for (j = 0; j < sz - 1 - i; j++)
-		{
-			//两个元素的比较
-			if (cmp((char*)base+j*width,(char*)base+(j+1)*width) > 0)
-			{
-				//交换
-				swap((char*)base + j * width, (char*)base + (j + 1) * width,width);
-			}
-		}
-	}
-}
 
 
-int cmp_int(const void* e1, const void* e2)
-{
-	//比较两个整型值
-	return *(int*)e1 - *(int*)e2;
-
-}
-void test4()
-{
-	 int arr[10] = { 9,8,7,6,5,4,3,2,1,0 };
-	 int sz = sizeof(arr) / sizeof(arr[0]);
-	 bubble_sort(arr, sz, sizeof(arr[0]), cmp_int);
-}
-void test5() 
-{
-	struct stu s[3] = { {"zhangsan",20},{"lesi",30},{"wangwu",10} };
-	int sz = sizeof(s) / sizeof(s[0]);
-	//bubble_sort(s, sz, sizeof(s[0]), );
-}
 int main()
 {
-	//test();
-	//test2();
-	//test3();
-	test4();
-	test5();
+	//数组名表示整个数组只有以下两种情况，其他时候都表示首元素地址
+	//1.sizeof(数组名）
+	//2.&数组名
+	//int a[] = { 1,2,3,4 };
+	//printf("%d\n", sizeof(a));//16
+	//printf("%d\n", sizeof(a+0));//4或8 - 在这里数组名表示首元素地址，a+0还是表示首元素地址 而地址的大小在x32中为4 x64中为8
+	//printf("%d\n", sizeof(*a));//4 对数组首元素解引用
+	//printf("%d\n", sizeof(a+1));//4或8 - a+1这里表示第二个元素的地址
+	//printf("%d\n", sizeof(a[1]));//4 -第二个元素地址
+	//printf("%d\n", sizeof(&a));//4或8 -&a确实取出整个数组的地址，但是仍然是个地址，地址的大小就是4/8
+	//printf("%d\n", sizeof(*&a));//16 -&a取出整个数组地址然后解引用 既计算整个数组的大小
+	//printf("%d\n", sizeof(&a+1));//4或8 -&a+1跳过一整个数组取后面的地址，实际就是地址的大小
+	//printf("%d\n", sizeof(&a[0]));//4或8 -取首元素地址
+	//printf("%d\n", sizeof(&a[0]+1));//4或8 -第二个元素地址
+	//
+	//char arr[] = { 'a','b','c','d','e','f' };
+	//printf("%d\n", strlen(arr));//随机值 -strlen是计算字符串长度的 它的参数是一个指针 从指针指向的地址开始往后数直到遇到\0
+	//printf("%d\n", strlen(arr+0));//随机值 和上面直接传arr意思一样
+	//printf("%d\n", strlen(*arr));//error -所传参数不是地址 错误
+	//printf("%d\n", strlen(arr[1]));//error
+	//printf("%d\n", strlen(&arr));//随机值
+	//printf("%d\n", strlen(&arr+1));//是（随机值-6）的随机值
+	//printf("%d\n", strlen(&arr[0]+1));//是（随机值-1）的随机值
+
+	//printf("%d\n", sizeof(arr));//6 -sizeof只计算数组大小单位字节
+	//printf("%d\n", sizeof(arr+0));//4或8 -是地址！！！
+	//printf("%d\n", sizeof(*arr));//1 -对首元素地址解引用
+	//printf("%d\n", sizeof(arr[1]));//1
+	//printf("%d\n", sizeof(&arr));//4或8 -还是地址！！！！
+	//printf("%d\n", sizeof(&arr+1));//4或8 -还是地址！！！！
+	//printf("%d\n", sizeof(&arr[0]+1));//4或8 -第二个元素的地址
+
+	//char arr[] = "abcdef";//这种数组在初始化时后面默认要加上\0的 - abcdef\0
+	//printf("%d\n", strlen(arr));//6
+	//printf("%d\n", strlen(arr+0));//6
+	//printf("%d\n", strlen(*arr));//error
+	//printf("%d\n", strlen(arr[1]));//error
+	//printf("%d\n", strlen(&arr));//6
+	//printf("%d\n", strlen(&arr+1));//随机值
+	//printf("%d\n", strlen(&arr[0]+1));//5
+
+	//printf("%d\n", sizeof(arr));//7
+	//printf("%d\n", sizeof(arr+0));//4或8 地址！！！
+	//printf("%d\n", sizeof(*arr));//1 对首元素地址解引用得到首元素 大小为1
+	//printf("%d\n", sizeof(arr[1]));//1
+	//printf("%d\n", sizeof(&arr));//4或8 地址!!!!
+	//printf("%d\n", sizeof(&arr+1));//4或8 地址！！！
+	//printf("%d\n", sizeof(&arr[0]+1));//4或8  地址！！
+
+	char* p = "abcdef";//p是指针变量，存放的是首字符地址
+	printf("%d\n", sizeof(p));//4或8
+	printf("%d\n", sizeof(p+1));//4或8 -第二个字符b的地址
+	printf("%d\n", sizeof(*p));//1 -对p解引用得到的是字符a
+	printf("%d\n", sizeof(p[0]));//1 -int arr[10];arr[0]==*(arr+0) p[0]==*(p+0)==a 它完全可以用数组的方式访问
+	printf("%d\n", sizeof(&p));//4或8
+	printf("%d\n", sizeof(&p+1));//4或8
+	printf("%d\n", sizeof(&p[0]+1));//4或8 -取到的是b的地址
+	
 	return 0;
 }
