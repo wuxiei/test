@@ -702,8 +702,8 @@
 
 
 
-int main()
-{
+//int main()
+//{
 	//数组名表示整个数组只有以下两种情况，其他时候都表示首元素地址
 	//1.sizeof(数组名）
 	//2.&数组名
@@ -753,14 +753,62 @@ int main()
 	//printf("%d\n", sizeof(&arr+1));//4或8 地址！！！
 	//printf("%d\n", sizeof(&arr[0]+1));//4或8  地址！！
 
-	char* p = "abcdef";//p是指针变量，存放的是首字符地址
-	printf("%d\n", sizeof(p));//4或8
-	printf("%d\n", sizeof(p+1));//4或8 -第二个字符b的地址
-	printf("%d\n", sizeof(*p));//1 -对p解引用得到的是字符a
-	printf("%d\n", sizeof(p[0]));//1 -int arr[10];arr[0]==*(arr+0) p[0]==*(p+0)==a 它完全可以用数组的方式访问
-	printf("%d\n", sizeof(&p));//4或8
-	printf("%d\n", sizeof(&p+1));//4或8
-	printf("%d\n", sizeof(&p[0]+1));//4或8 -取到的是b的地址
+	//char* p = "abcdef";//p是指针变量，存放的是首字符地址
+	//printf("%d\n", strlen(p));//6
+	//printf("%d\n", strlen(p + 1));//5
+	//printf("%d\n", strlen(*p));//error
+	//printf("%d\n", strlen(p[0]));//error
+	//printf("%d\n", strlen(&p));//随机值 -p里面存的是字符串首字符地址 是个地址 谁知道那地址是个啥玩意儿
+	//printf("%d\n", strlen(&p+1));//随机值
+	//printf("%d\n", strlen(&p[0] + 1));//5
+	//printf("%d\n", sizeof(p));//4或8
+	//printf("%d\n", sizeof(p+1));//4或8 -第二个字符b的地址
+	//printf("%d\n", sizeof(*p));//1 -对p解引用得到的是字符a
+	//printf("%d\n", sizeof(p[0]));//1 -int arr[10];arr[0]==*(arr+0) p[0]==*(p+0)==a 它完全可以用数组的方式访问
+	//printf("%d\n", sizeof(&p));//4或8
+	//printf("%d\n", sizeof(&p+1));//4或8
+	//printf("%d\n", sizeof(&p[0]+1));//4或8 -取到的是b的地址
+
+	//int a[3][4] = { 0 };//二维数组首元素就是第一行数组
+	//printf("%d\n", sizeof(a));//48
+	//printf("%d\n", sizeof(a[0][0]));//4
+	//printf("%d\n", sizeof(a[0]));//16 -这里a[0]表示第一行数组的数组名 sizeof(数组名)表示整个数组 所以sizeof(a[0])表示第一行的数组大小，而不是指针
+	//printf("%d\n", sizeof(a[0]+1));//4或8 -第一行第二个数组的大小 a[0]不是单独放在sizeof中的所以表示数组首元素地址 a[0]+1就是第二个元素的地址
+	//printf("%d\n", sizeof(*(a[0]+1)));//4 -第一行第二个元素
+	//printf("%d\n", sizeof(a+1));//4或8 -第二行数组的地址 因为二维数组的首元素地址是第一行数组的地址 二维数组的首元素就是第一行数组
+	//printf("%d\n", sizeof(*(a+1)));//16 -第二行数组大小
+	//printf("%d\n", sizeof(&a[0]+1));//4或8 -第二行地址
+	//printf("%d\n", sizeof(*(&a[0]+1)));//16
+	//printf("%d\n", sizeof(*a));//16 -对首元素地址解引用 二维数组首元素地址就是第一行数组地址 解引用就是第一行数组
+	//printf("%d\n", sizeof(a[3]));//16 -虽然第四行并不存在 但是它作为a数组仍然是int且每行4个元素的数组 所以还是16
+
 	
-	return 0;
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	int a[5] = { 1,2,3,4,5 };
+//	int *ptr = (int*)(&a + 1);//&a a表示整个数组&a+1表示跳过整个数组指向数组末元素（5）后面
+//	printf("%d,%d\n", *(a + 1), *(ptr - 1));// 2 5 //ptr-1就是指针向前移动一个int大小 也就指向了5
+//	return 0;
+//}
+
+struct Test
+{
+	int num;
+	char* pcname;
+	short sdate;
+	char cha[2];
+	short sba[4];
+}*p;
+//假设p的值为0x100000, 结构体Test类型的变量大小是20个字节
+int main()
+{
+	p =(struct Test*) 0x100000;
+	//指针p的是什么类型 那p+1就表示（指针类型大小）+1
+	printf("%p\n", p + 0x1);
+	printf("%p\n", (unsigned long)p + 0x1);
+	printf("%p\n", (unsigned int*)p + 0x1);
 }
