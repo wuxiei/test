@@ -795,20 +795,203 @@
 //	return 0;
 //}
 
-struct Test
+//struct Test
+//{
+//	int num;
+//	char* pcname;
+//	short sdate;
+//	char cha[2];
+//	short sba[4];
+//}*p;
+////假设p的值为0x100000, 结构体Test类型的变量大小是20个字节
+//int main()
+//{
+//	p =(struct Test*) 0x100000;
+//	//指针p的是什么类型 那p+1就表示（指针类型大小）+1
+//	printf("%p\n", p + 0x1);
+//	printf("%p\n", (unsigned long)p + 0x1);
+//	printf("%p\n", (unsigned int*)p + 0x1);
+//}
+
+
+//字符串逆序
+//void reverse(char* str)
+//{
+//	int len = strlen(str);
+//	char* left = str;
+//	char* right = str+len-1;
+//	while (left < right)
+//	{
+//		char tmp =* left;
+//		*left =* right;
+//		*right = tmp;
+//		left++;
+//		right--;
+//	}
+//}
+//int main()
+//{
+//	char arr[20] = { 0 };
+//	scanf("%s", &arr);
+//	reverse(arr);
+//	printf("%s", arr);
+//	return 0;
+//}
+
+
+//求2+22+222+2222+22222的和
+//int main()
+//{
+//	int i = 0;
+//	int a = 0;
+//	int n = 0;
+//	int sum = 0;
+//	int ret = 0;
+//	scanf("%d%d",&a,&n );
+//	for (i = 0; i < n; i++)
+//	{
+//		ret = ret * 10 + a;//取到a aa aaa aaaa
+//		sum += ret;
+//	}
+//	printf("%d\n", sum);
+//	return 0;
+//}
+
+
+//求0-100000中的水仙花数（例如:1^3+2^3+3^3=123）
+//#include<math.h>
+//int main()
+//{
+//	int i = 0;
+//	
+//	
+//	for (i = 0; i < 100000; i++)
+//	{
+//		int n = 1;
+//		int tmp = i;
+//		int sum = 0;
+//		//1.先求出i是n位数
+//		while (tmp/= 10)
+//		{
+//			n++;
+//			
+//		}
+//		//2.再求每一位数的n次方之和
+//		tmp = i;
+//		while (tmp)
+//		{
+//			sum = sum + pow(tmp % 10, n);
+//			tmp = tmp / 10;
+//		}
+//		//3.比较与原数i是否相同
+//		if (sum == i)
+//		{
+//			printf("%d ", i);
+//		}
+//	}
+//	
+//	
+//	return 0;
+//}
+
+
+//打印菱形
+//int main()
+//{
+//	//将菱形分成上下两半 上半line行下半line-1行
+//	
+//	//上半部分
+//	int i = 0;
+//	int line = 0;
+//	scanf("%d", &line);
+//	for (i = 0; i < line; i++)
+//	{
+//		//打印空格 
+//		int j = 0;
+//		for (j = 0; j < line-1-i; j++)
+//		{
+//			printf(" ");
+//		}
+//		//打印*
+//		for (j = 0; j < i*2+1; j++)
+//		{
+//			printf("*");
+//		}
+//		printf("\n");
+//	}
+//	//下半部分
+//	for (i = 0; i <line-1 ; i++)
+//	{
+//		int j = 0;
+//		//输出空格
+//		for (j = 0; j <=i ; j++)
+//		{
+//			printf(" ");
+//		}
+//		//输出*
+//		for (j = 0; j < 2*(line-1-i)-1; j++)
+//		{
+//			printf("*");
+//		}
+//		printf("\n");
+//	}
+//	return 0;
+//}
+
+
+//有20块钱，一瓶汽水一块钱，每两个空瓶可以换一瓶汽水 一共可以喝多少瓶  memony-钱  empty-空瓶  total-喝了多少瓶
+//int main()
+//{
+//	int memony = 0;
+//	scanf("%d", &memony);
+//	int total = memony;
+//	int empty = memony;
+//	while (empty >= 2)
+//	{
+//		total = total + empty / 2;
+//		empty = empty / 2 + empty % 2;
+//		
+//	}
+//	
+//	printf("%d", total);
+//	return 0;
+//}
+
+
+
+//将一个数组中的奇数放前面偶数放后面
+void move(int arr[], int sz)
 {
-	int num;
-	char* pcname;
-	short sdate;
-	char cha[2];
-	short sba[4];
-}*p;
-//假设p的值为0x100000, 结构体Test类型的变量大小是20个字节
+	int left = 0;
+	int right = sz - 1;
+	while (left < right)
+	{
+		//找到左边的偶数
+		while ((arr[left] % 2 == 1) && (left < right))
+		{
+			left++;
+		}
+		//找到右边的奇数
+		while ((arr[right] % 2 == 0) && (left < right))
+		{
+			right--;
+		}
+		//交换 - 将偶数放到右面奇数放到左面
+		int tmp = arr[left];
+		arr[left] = arr[right];
+		arr[right] = tmp;
+	}
+}
 int main()
 {
-	p =(struct Test*) 0x100000;
-	//指针p的是什么类型 那p+1就表示（指针类型大小）+1
-	printf("%p\n", p + 0x1);
-	printf("%p\n", (unsigned long)p + 0x1);
-	printf("%p\n", (unsigned int*)p + 0x1);
+	int arr[] = { 1,2,3,4,5,6,7,8,9,10 };
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	move(arr,sz);
+	int i = 0;
+	for (i = 0; i < sz; i++)
+	{
+		printf("%d", arr[i]);
+	}
+	
+	return 0;
 }

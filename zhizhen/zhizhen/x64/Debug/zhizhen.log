@@ -1,6 +1,1 @@
-﻿  zhizhen.c
-D:\c-code\zhizhen\zhizhen\zhizhen.c(686,47): warning C4047: “函数”:“int *(__cdecl *)(void *,void *)”与“int (__cdecl *)(const void *,const void *)”的间接级别不同
-D:\c-code\zhizhen\zhizhen\zhizhen.c(686,40): warning C4024: “bubble_sort”: 形参和实参 4 的类型不同
-D:\c-code\zhizhen\zhizhen\zhizhen.c(692,50): warning C4047: “函数”:“int *(__cdecl *)(void *,void *)”与“int (__cdecl *)(const void *,const void *)”的间接级别不同
-D:\c-code\zhizhen\zhizhen\zhizhen.c(692,35): warning C4024: “bubble_sort”: 形参和实参 4 的类型不同
-  zhizhen.vcxproj -> D:\c-code\zhizhen\x64\Debug\zhizhen.exe
+﻿  zhizhen.vcxproj -> D:\c-code\zhizhen\x64\Debug\zhizhen.exe
