@@ -1,2 +1,6 @@
 ﻿  exercise.c
+D:\c-code\exercise\exercise\exercise.c(248,19): warning C4013: “strlen”未定义；假设外部返回 int
+D:\c-code\exercise\exercise\exercise.c(256,9): warning C4013: “strncat”未定义；假设外部返回 int
+D:\c-code\exercise\exercise\exercise.c(260,20): warning C4013: “strstr”未定义；假设外部返回 int
+D:\c-code\exercise\exercise\exercise.c(260,1): warning C4047: “初始化”:“char *”与“int”的间接级别不同
   exercise.vcxproj -> D:\c-code\exercise\x64\Debug\exercise.exe
