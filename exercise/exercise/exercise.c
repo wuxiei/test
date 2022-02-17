@@ -243,42 +243,134 @@
 
 
 //判断s2是否是s1左旋得到的 - 非左旋法 - 给s1追加它本身然后判断s2是否为s1的子串
-int is_left_move(char* str1, char* str2)
-{
-	int len1 = strlen(str1);
-	int len2 = strlen(str2);
-	if (len1 != len2)
-	{
-		return 0;
-	}
-	//1.给str1追加它本身
-	
-	strncat(str1, str1, len1);
-	
-	//2.判断str2是不是追加后的str1的子串
-	//strstr - 找子串 - 是子串返回首字符地址，不是子串返回空指针
-	char* ret = strstr(str1, str2);
-	if (ret == NULL)
-	{
-		return 0;
-	}
-	else
-	{
-		return 1;
-	}
-}
-int main()
-{
-	char arr1[30] = "abcdef";
-	char arr2[] = "cdefab";
-	int ret = is_left_move(arr1, arr2);
-	if (ret == 1)
-	{
-		printf("yes");
-	}
-	else
-	{
-		printf("no");
-	}
-	return 0;
-}
+//int is_left_move(char* str1, char* str2)
+//{
+//	int len1 = strlen(str1);
+//	int len2 = strlen(str2);
+//	if (len1 != len2)
+//	{
+//		return 0;
+//	}
+//	//1.给str1追加它本身
+//	
+//	strncat(str1, str1, len1);
+//	
+//	//2.判断str2是不是追加后的str1的子串
+//	//strstr - 找子串 - 是子串返回首字符地址，不是子串返回空指针
+//	char* ret = strstr(str1, str2);
+//	if (ret == NULL)
+//	{
+//		return 0;
+//	}
+//	else
+//	{
+//		return 1;
+//	}
+//}
+//int main()
+//{
+//	char arr1[30] = "abcdef";
+//	char arr2[] = "cdefab";
+//	int ret = is_left_move(arr1, arr2);
+//	if (ret == 1)
+//	{
+//		printf("yes");
+//	}
+//	else
+//	{
+//		printf("no");
+//	}
+//	return 0;
+//}
+
+
+//杨氏矩阵 - 矩阵的每行从左到右是递增的，从上到下也是递增的
+//写一个程序判断k是否为杨氏矩阵中的一个数,如果是返回下标
+//int Fundnum(int arr[3][3], int k, int row, int col)
+//{
+//	int x = 0;//x表示行
+//	int y = col - 1;//y表示列 col-1表示最后一列
+//	while (x<=row-1&&y>=0)//
+//	{
+//		if (arr[x][y] > k)//arr[x][y]表示每一行最后一个元素
+//		{
+//			y--;
+//		}
+//		else if (arr[x][y] < k)
+//		{
+//			x++;
+//		}
+//		else
+//		{
+//			printf("下标为：%d%d", x, y);
+//			return 1;
+//			
+//		}
+//	}
+//	return 0;//不存在
+//}
+//int main()
+//{
+//	int arr[3][3] = { {1,2,3},{4,5,6},{7,8,9} };
+//	int k = 7;
+//	int ret = Fundnum(arr, k, 3, 3);
+//	if (ret == 1)
+//	{
+//		printf("找到了");
+//		
+//
+//	}
+//	else
+//	{
+//		printf("不存在");
+//
+//	}
+//	return 0;
+//}
+
+
+//传参法，直接将下标带回来
+//int Fundnum(int arr[3][3], int k, int* px, int* py)
+//{
+//	int x = 0;//x表示行
+//	int y = *py - 1;//y表示列 col-1表示最后一列
+//	while (x <= *px - 1 && y >= 0)//
+//	{
+//		if (arr[x][y] > k)//arr[x][y]表示每一行最后一个元素
+//		{
+//			y--;
+//		}
+//		else if (arr[x][y] < k)
+//		{
+//			x++;
+//		}
+//		else
+//		{
+//			*px = x;
+//			*py = y;
+//			return 1;
+//
+//		}
+//	}
+//	return 0;//不存在
+//}
+//int main()
+//{
+//	int arr[3][3] = { {1,2,3},{4,5,6},{7,8,9} };
+//	int k = 7;
+//	int x = 3;
+//	int y = 3;
+//	int ret = Fundnum(arr, k, &x, &y);
+//	if (ret == 1)
+//	{
+//		printf("找到了");
+//		printf("下标是：%d %d", x, y);
+//
+//	}
+//	else
+//	{
+//		printf("不存在");
+//
+//	}
+//	return 0;
+//}
