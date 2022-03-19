@@ -269,17 +269,80 @@
 //strerror - 错误码 -- 参数errno - 一个全局的错误码变量 当c语言的库函数在执行过程中发生了错误，就会把对应的错误码赋值到errno中
 #include<errno.h>
 //打开文件
+//int main()
+//{
+//	//char* str = strerror(errno);
+//	FILE* pf = fopen("test.txt", "r");
+//	if (pf == NULL)
+//	{
+//		printf("%s\n", strerror(errno));//如果出现错误报告对应错误码
+//	}
+//	else
+//	{
+//		printf("open seccess");
+//	}
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	char arr1[] = "I AM TEEMO";
+//	int i = 0;
+//	while (arr1[i])
+//	{
+//		/*arr1[i]=tolower(arr1[i]);
+//		i++;*/
+//		if (isupper(arr1[i]))
+//		{
+//			arr1[i] = tolower(arr1[i]);
+//		}
+//		i++;
+//	}
+//	printf("%s\n", arr1);
+//	return 0;
+//}
+
+
+//操作对象是空间的字符串操作函数 - 可以操作任意类型的字符串
+//memcpy
+//int main()
+//{
+//	int arr1[] = { 1,2,3,4,5 };
+//	int arr2[10] = {0};
+//	memcpy(arr2, arr1, sizeof(arr1));//传入长度这里是要求以字节为单位 - 一个整型占四个字节
+//
+//	return 0;
+//}
+
+
+
+#include<assert.h>
+//my_memcpy
+struct s
+{
+	char name[20];
+	int age;
+};
+void* my_memcpy(void* dest, const void* src,size_t num)//size_t是无符号的整型
+{
+	assert(dest);
+	assert(src);
+	void* ret = dest;
+	while (num--)
+	{
+		*(char*)dest = *(char*)src;
+		++(char*)dest;
+		++(char*)src;//优先级;i++ > 强制类型转换 > ++i 
+	}
+	//最后这里应该返回dest的首字符地址
+	return ret;
+}
 int main()
 {
-	//char* str = strerror(errno);
-	FILE* pf = fopen("test.txt", "r");
-	if (pf == NULL)
-	{
-		printf("%s\n", strerror(errno));//如果出现错误报告对应错误码
-	}
-	else
-	{
-		printf("open seccess");
-	}
+	struct s arr1[] = { {"张三",12},{"李四",43} };
+	struct s arr2[20] = { 0 };
+	my_memcpy(arr2, arr1, sizeof(arr1));
+
 	return 0;
 }
