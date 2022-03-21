@@ -1,4 +1,4 @@
 ﻿  string+++.c
-D:\c-code\string+++\string+++\string+++.c(85,13): warning C4101: “s2”: 未引用的局部变量
-D:\c-code\string+++\string+++\string+++.c(84,13): warning C4101: “s1”: 未引用的局部变量
+D:\c-code\string+++\string+++\string+++.c(162,9): warning C4475: “printf”: 不可在格式说明符中将长度修饰符“I”与类型字段字符“F”一起使用
+D:\c-code\string+++\string+++\string+++.c(169,9): warning C4475: “printf”: 不可在格式说明符中将长度修饰符“I”与类型字段字符“F”一起使用
   string+++.vcxproj -> D:\c-code\string+++\x64\Debug\string+++.exe
