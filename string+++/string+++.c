@@ -144,36 +144,122 @@
 
 //默认对齐数可以更改
 #pragma pack(4)//将默认对齐数改为4
-struct S
+//struct S
+//{
+//	char c;
+//	int i;
+//	double d;
+//};
+//void Init(struct S* ps)
+//{
+//	ps->c = 'w';
+//	ps->i = 100;
+//	ps->d = 3.14;
+//}
+////传值调用 - 不可修改结构体内容且占用空间大
+//void print1(struct S tmp)
+//{
+//	printf("%c %d %IF\n", tmp.c, tmp.i, tmp.d);
+//}
+////传址调用 - 可以修改结构体内容且占用空间小
+////若不想结构体被修改可以写成：void print2(const struct S* tmp)
+//void print2(struct S* tmp)
+//{
+//	tmp->c = 'h';
+//	printf("%c %d %IF\n", tmp->c, tmp->i, tmp->d);
+//}
+//int main()
+//{
+//	struct S s = { 0 };
+//	Init(&s);//初始化s
+//	printf("%d\n", s.i);
+//	print1(s);
+//	print2(&s);//！！推荐传址！！
+//	return 0;
+//}
+
+
+//struct T
+//{
+//	double w;
+//	int age;
+//};
+//struct S
+//{
+//	char c;
+//	struct T st;
+//	int a;
+//	double d;
+//	char arr[20];
+//};
+//int main()
+//{
+//	struct S s = { 'c',{3.14,30},6,7.7,"hello.." };
+//	printf("%c %If %d %d %If %s\n", s.c, s.st.w, s.st.age, s.a, s.d, s.arr);
+//	printf("%d\n", sizeof(s));//48
+//	return 0;
+//}
+//！！！ - 由于结构体特殊的存储方式 所以在设计结构体时要让占用空间小的成员尽量集中在一起
+
+
+//位段 - 二进制位
+//1.冒号后面的数字表示在所定义型中只取几个比特位 - 节省空间
+//2.在当前编译器中从右->左开辟空间
+//3.存储也是将数值换成二进制从右到左存储
+//4.当存入的数的二进制位>位段数 - 则从右到左截取位段数个比特位存储
+//5.当存入的数的二进制位<位段数 - 则在该二进制数左面补0
+//struct S
+//{
+//	int a : 2;
+//	int b : 5;
+//	int c : 10;
+//	int d : 30;
+//};
+//
+//int main()
+//{
+//	struct S s;
+//	printf("%d", sizeof(s));//8
+//	return 0;
+//}
+
+
+//枚举类型 - 枚举类新成员常量的值在无定义情况下是从0开始顺序+1的 但在定义枚举常量时可以赋初值！！！但是之后不能改变
+//enum Sex
+//{
+//	MALF,//0
+//	FEMALE,//1
+//	SECRT//2
+//};
+//
+//enum A
+//{
+//	//这样赋初值是可以的
+//	z = 3,//3
+//	x=5//5
+//};
+//int main()
+//{
+//	enum Sex s = MALF;
+//	printf("%d\n", s);//0
+//	printf("%d %d", z, x);//3 5
+//	return 0;
+//}
+
+
+//联合体 - 共用体 
+//1.联合体就是成员联合共用同一块内存空间
+//2.联合体成员不能同时使用，且一改都改
+//3.联合变量的大小至少是最大成员的大小and当最大成员大小不是最大对齐数的整数倍时，要对齐到最大对齐数的的整数倍
+union un
 {
-	char c;
-	int i;
-	double d;
+	char c;//大小1 默认对齐数4 对齐数1
+	int i;//大小4 默认对齐数4 对齐数4
+	//最成员数是4 最大对齐数是4 正好是整数倍关系所以联合成员变量大小为4
 };
-void Init(struct S* ps)
-{
-	ps->c = 'w';
-	ps->i = 100;
-	ps->d = 3.14;
-}
-//传值调用 - 不可修改结构体内容且占用空间大
-void print1(struct S tmp)
-{
-	printf("%c %d %IF\n", tmp.c, tmp.i, tmp.d);
-}
-//传址调用 - 可以修改结构体内容且占用空间小
-//若不想结构体被修改可以写成：void print2(const struct S* tmp)
-void print2(struct S* tmp)
-{
-	tmp->c = 'h';
-	printf("%c %d %IF\n", tmp->c, tmp->i, tmp->d);
-}
 int main()
 {
-	struct S s = { 0 };
-	Init(&s);//初始化s
-	printf("%d\n", s.i);
-	print1(s);
-	print2(&s);//！！推荐传址！！
+	union un u;
+	printf("%d\n", sizeof(u));//4
 	return 0;
 }

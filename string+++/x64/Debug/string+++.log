@@ -1,4 +1,4 @@
 ﻿  string+++.c
-D:\c-code\string+++\string+++\string+++.c(162,9): warning C4475: “printf”: 不可在格式说明符中将长度修饰符“I”与类型字段字符“F”一起使用
-D:\c-code\string+++\string+++\string+++.c(169,9): warning C4475: “printf”: 不可在格式说明符中将长度修饰符“I”与类型字段字符“F”一起使用
+D:\c-code\string+++\string+++\string+++.c(259,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
+D:\c-code\string+++\string+++\string+++.c(259,9): message : 请考虑在格式字符串中使用“%zd”
   string+++.vcxproj -> D:\c-code\string+++\x64\Debug\string+++.exe
