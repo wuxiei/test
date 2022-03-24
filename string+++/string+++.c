@@ -1,7 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS 
+
 #include<stdio.h>
 #include<string.h>
 #include<assert.h>
-
+#include<errno.h>
+#include<stdlib.h>
 //处理内存重叠的字符串拷贝
 //int main()
 //{
@@ -251,15 +254,115 @@
 //1.联合体就是成员联合共用同一块内存空间
 //2.联合体成员不能同时使用，且一改都改
 //3.联合变量的大小至少是最大成员的大小and当最大成员大小不是最大对齐数的整数倍时，要对齐到最大对齐数的的整数倍
-union un
-{
-	char c;//大小1 默认对齐数4 对齐数1
-	int i;//大小4 默认对齐数4 对齐数4
-	//最成员数是4 最大对齐数是4 正好是整数倍关系所以联合成员变量大小为4
-};
-int main()
-{
-	union un u;
-	printf("%d\n", sizeof(u));//4
-	return 0;
-}
+//union un
+//{
+//	char c;//大小1 默认对齐数4 对齐数1
+//	int i;//大小4 默认对齐数4 对齐数4
+//	//最成员数是4 最大对齐数是4 正好是整数倍关系所以联合成员变量大小为4
+//};
+//int main()
+//{
+//	union un u;
+//	printf("%d\n", sizeof(u));//4
+//	return 0;
+//}
+
+
+
+//大小端判断
+//int main()
+//{
+//	int a = 1;//大端00 00 00 01  小端01 00 00 00
+//	if(1 == *(char*)&a)
+//	{
+//		printf("小端\n");
+//	}
+//	else
+//	{
+//		printf("大端");
+//	}
+//}
+
+
+//用联合体求大小端
+//int check_sys()
+//{
+//	union un
+//	{
+//		char c;
+//		int i;
+//	}u;
+//	u.i = 1;
+//	return u.c;
+//}
+//int main()
+//{
+//	int a = 1;
+//	int ret = check_sys();
+//	if (1 == ret)
+//	{
+//		printf("小端");
+//	}
+//	else
+//	{
+//		printf("大端");
+//	}
+//	return 0;
+//}
+
+
+
+//动态内存开辟
+//1.开辟成功，返回一个指向开辟好的空间的指针
+//2.开辟失败，返回一个空指针
+//3.malloc默认返回类型是void* 在对内存访问等使用过程中不方便，所以在使用时可以自己只等指针类型
+//int main()
+//{
+//	//向内存申请10个整型的空间
+//	int* p=(int*)malloc(10 * sizeof(int));
+//	if (p == NULL)
+//	{
+//		//内存开辟失败返回错误提示
+//		printf("%s\n", strerror(errno));
+//	}
+//	else
+//	{
+//		//可正常使用
+//		int i = 0;
+//		for (i = 0; i < 10; i++)
+//		{
+//			*(p + i) = i;
+//			printf("%d ", *(p + i));
+//		}
+//		
+//	}
+//	free(p);//当动态申请内存不再使用时，应该将内存还给操作系统
+//	p = NULL;//free释放指针所指的内存后仍然有能力访问到那块空间，所以为了减少不必要的麻烦要置空
+//	return 0;
+//}
+
+
+
+//int main()
+//{
+//	//向内存申请10个整型的空间
+//	int* p = (int*)malloc(INT_MAX);//int型的最大值
+//	if (p == NULL)
+//	{
+//		//内存开辟失败返回错误提示
+//		printf("%s\n", strerror(errno));
+//	}
+//	else
+//	{
+//		//可正常使用
+//		int i = 0;
+//		for (i = 0; i < 10; i++)
+//		{
+//			*(p + i) = i;
+//			printf("%d ", *(p + i));
+//		}
+//
+//	}
+//	return 0;
+//}
+
