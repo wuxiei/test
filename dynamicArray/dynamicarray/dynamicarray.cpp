@@ -104,6 +104,52 @@ void foreach_dynamicArray(struct dynamicArray* array, void(*myForeach)(void*))//
 	}
 }
 
+
+///É¾³ıÊı×éÖĞµÄÔªËØ
+//1.°´Î»ÖÃÉ¾³ı
+void removeBYPos_DynamicArray(struct dynamicArray* arr, int pos)
+{
+	if (arr == NULL)
+	{
+		return;
+	}
+	if (pos<0 || pos>arr->m_size - 1)
+	{
+		//ÎŞĞ§µÄÎ»ÖÃ
+		return;
+	}
+	//´ÓposÎ»ÖÃ¿ªÊ¼£¬µ½Êı×éÄ©Î²£¬Êı×éÈ«²¿½øĞĞÇ°ÒÆ
+	int i = 0;
+	for (i = pos; i < arr->m_size - 1; i++)
+	{
+		arr->pAddr[i] = arr->pAddr[i + 1];
+	}
+	arr->m_size--;
+}
+//2.°´ÖµÉ¾³ı
+
+void removeByValu_DynamicArray(struct dynamicArray* arr, void* data, int(*myCompare)(void*, void*))//myCompare»Øµ÷º¯Êı£¬¶Ô±Èº¯Êı
+{
+	if (NULL == arr)
+	{
+		return;
+	}
+	if (NULL == data)
+	{
+		return;
+	}
+	int i = 0;
+	for (i = 0; i < arr->m_size; i++)
+	{
+		//´ÓµÚÒ»¸öÔªËØ¿ªÊ¼±éÀúÊÇ·ñÊÇÒªÉ¾³ıµÄÊı×é
+		if (myCompare(arr->pAddr[i], data))
+		{
+			removeBYPos_DynamicArray(arr, i);
+			break;
+		}
+	}
+}
+
 //´´½¨Òª±éÀúµÄ½á¹¹Ìå
 struct person
 {
@@ -115,6 +161,31 @@ void myprintPerson(void* data)//»Øµ÷º¯Êı - dataÊÇvoidÀàĞÍµÄÊı¾İ£¬ÎŞ·¨Ö±½ÓÊä³ö£¬Ò
 {
 	struct person* P = (struct person*)data;
 	printf("ĞÕÃû£º%sÄêÁä%d\n", P->name,P->age);
+}
+
+//
+int myCompareperson(void* data1, void* data2)
+{
+	struct person* p1 = (struct person*)data1;
+	struct person* p2 = (struct person*)data2;
+	return strcmp(p1->name, p2->name) == 0 && p1->age == p2->age;
+}
+
+
+//Ïú»ÙÊı×é
+void destor_DynaicArray(struct dynamicArray* arr)
+{
+	if (NULL == arr)
+	{
+		return;
+	}
+	if (arr->pAddr != NULL)
+	{
+		free(arr->pAddr);
+		arr->pAddr = NULL;
+	}
+	free(arr);
+	arr = NULL;
 }
 void test01()
 {
@@ -141,7 +212,22 @@ void test01()
 	//±éÀú¶¯Ì¬Êı×é
 	foreach_dynamicArray(arr, myprintPerson);
 
-	printf("²åÈëºóÈİÁ¿£º%d", arr->m_capacity);
+	printf("²åÈëºóÈİÁ¿£º%d\n", arr->m_capacity);
+
+	//°´Î»ÖÃÉ¾³ıÊı×é
+	removeBYPos_DynamicArray(arr, 1);
+	printf("É¾³ıµÚÒ»¸öÎ»ÖÃµÄÔªËØºó£¬Êı×éÖĞÊı¾İÎª£º\n");
+	foreach_dynamicArray(arr, myprintPerson);
+	
+	printf("------------------------------------------------\n");
+	//°´ÖµÉ¾³ıÊı×é
+	struct person p = { "ÕÅ·É",19 };
+	removeByValu_DynamicArray(arr,&p,myCompareperson);
+	foreach_dynamicArray(arr, myprintPerson);
+
+	//Ïú»ÙÊı×é
+	destor_DynaicArray(arr);
+	arr = NULL;
 }
 int main()
 {
