@@ -1,3 +1,2 @@
 ﻿  file.c
-D:\c-code\file\file\file.c(89,6): warning C4013: “gets”未定义；假设外部返回 int
   file.vcxproj -> D:\c-code\file\x64\Debug\file.exe
